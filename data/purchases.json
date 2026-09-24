@@ -1,0 +1,62 @@
+[
+  {
+    "order_id": "SLB-1001",
+    "email": "laura.gomez@academiatigres.co",
+    "customer_name": "Laura Gómez",
+    "academy": "Academia Tigres FC",
+    "product": "plan_basico_mensual",
+    "description": "Plan Básico mensual",
+    "amount_cop": 89000,
+    "paid_at": "2026-09-10",
+    "payment_method": "Tarjeta de crédito terminada en 4421",
+    "status": "paid"
+  },
+  {
+    "order_id": "SLB-1002",
+    "email": "carlos.rios@escuelaleones.com",
+    "customer_name": "Carlos Ríos",
+    "academy": "Escuela de Fútbol Leones",
+    "product": "plan_pro_anual",
+    "description": "Plan Pro anual",
+    "amount_cop": 1790000,
+    "paid_at": "2026-09-05",
+    "payment_method": "PSE Bancolombia",
+    "status": "paid"
+  },
+  {
+    "order_id": "SLB-1003",
+    "email": "andrea.mejia@clubcondores.co",
+    "customer_name": "Andrea Mejía",
+    "academy": "Club Cóndores",
+    "product": "plan_club_mensual",
+    "description": "Plan Club mensual",
+    "amount_cop": 349000,
+    "paid_at": "2026-07-15",
+    "payment_method": "Nequi",
+    "status": "paid"
+  },
+  {
+    "order_id": "SLB-1004",
+    "email": "jorge.pardo@semillerosdelsur.co",
+    "customer_name": "Jorge Pardo",
+    "academy": "Semilleros del Sur",
+    "product": "plan_pro_mensual",
+    "description": "Plan Pro mensual",
+    "amount_cop": 179000,
+    "paid_at": "2026-08-20",
+    "payment_method": "Tarjeta débito terminada en 0087",
+    "status": "refunded"
+  },
+  {
+    "order_id": "SLB-1005",
+    "email": "laura.gomez@academiatigres.co",
+    "customer_name": "Laura Gómez",
+    "academy": "Academia Tigres FC",
+    "product": "implementacion",
+    "description": "Implementación asistida",
+    "amount_cop": 450000,
+    "paid_at": "2026-09-10",
+    "payment_method": "Tarjeta de crédito terminada en 4421",
+    "status": "paid"
+  }
+]

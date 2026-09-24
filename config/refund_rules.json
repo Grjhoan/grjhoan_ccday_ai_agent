@@ -1,0 +1,7 @@
+{
+  "refund_window_days": 30,
+  "max_auto_approve_cop": 300000,
+  "eligible_reasons": ["duplicate_charge", "cancellation", "service_failure"],
+  "window_exempt_reasons": ["duplicate_charge"],
+  "non_refundable_products": ["implementacion"]
+}
