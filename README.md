@@ -3,10 +3,42 @@
 Chatwoot **Agent Bot** for Silbato's website widget. Answers basic business info, handles refund requests end to end with deterministic rules, and hands off to a human agent.
 
 - Model: `claude-sonnet-5` with `effort: medium`, tool use, prompt caching on the system prompt.
-- Stateless: conversation context is rebuilt from the Chatwoot messages API (in-memory fallback).
+- Conversation context: Chatwoot doesn't let bot tokens read message history, so the bot keeps it in memory (6 h, lost on redeploy).
 - Business data is **fictional** (`knowledge/`, `config/`, `data/`).
 
-## How it works
+## The big picture
+
+```mermaid
+flowchart LR
+    C["👤 Customer<br/>chat widget on silbato.com.co"]
+    CW["💬 Chatwoot<br/>(inbox for the team)"]
+    BOT["🤖 Silbato bot<br/>(this repo, on Railway)"]
+    AI["🧠 Claude<br/>(understands and replies)"]
+    RULES["📋 Refund rules<br/>+ purchases data"]
+    H["🙋 Human agent"]
+
+    C -- "1. writes a message" --> CW
+    CW -- "2. forwards it" --> BOT
+    BOT -- "3. asks" --> AI
+    AI -- "4. checks when needed" --> RULES
+    BOT -- "5. sends the reply" --> CW
+    CW -- "6. shows it" --> C
+    BOT -. "can't solve it? hand off" .-> H
+    H -. "answers from Chatwoot" .-> CW
+
+    GH["🐙 GitHub"] -- "push to main → tests pass → auto deploy" --> BOT
+```
+
+In plain words:
+
+1. A customer writes in the website chat. Chatwoot receives it and forwards it to the bot.
+2. The bot asks Claude to understand the message and write a short, friendly answer, using only Silbato's info and refund policy.
+3. For refunds, Claude looks up the purchase and checks the **fixed rules** (30 days, max $300.000, etc.). The rules decide, not the AI.
+4. The bot replies in the chat. Approved refunds get a note for the team, who then return the money.
+5. If the customer asks for a person, gets upset, or the case is out of policy, the bot passes the chat to a human in Chatwoot and stops replying.
+6. Code changes go to GitHub. Once the tests pass, Railway deploys them automatically.
+
+## How it works (technical)
 
 ```
 Chatwoot ──POST /chatwoot/webhook?secret=…──▶ server.ts (200 immediately)
