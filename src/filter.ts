@@ -10,12 +10,12 @@ export const WebhookPayload = z
     sender: z
       .object({ name: z.string().nullish(), email: z.string().nullish(), type: z.string().nullish() })
       .passthrough()
-      .optional(),
+      .nullish(),
     conversation: z
       .object({ id: z.number(), status: z.string().optional(), labels: z.array(z.string()).optional() })
       .passthrough()
-      .optional(),
-    account: z.object({ id: z.number() }).passthrough().optional(),
+      .nullish(),
+    account: z.object({ id: z.number() }).passthrough().nullish(),
   })
   .passthrough();
 export type WebhookPayload = z.infer<typeof WebhookPayload>;

@@ -1,6 +1,6 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import { runAgent } from "./agent.js";
-import { chatwoot, type ChatwootMessage } from "./chatwoot.js";
+import { chatwoot, ChatwootError, type ChatwootMessage } from "./chatwoot.js";
 import { env } from "./config.js";
 import { normalize, wantsHuman, type IncomingMessage } from "./filter.js";
 import { TtlMap } from "./memory.js";
@@ -9,17 +9,20 @@ import { handoff, type ToolContext } from "./tools.js";
 const MAX_BOT_MESSAGES = 8;
 const FALLBACK_MESSAGE = "Lo siento, tuve un problema procesando tu mensaje.";
 
-// Fallback history when the bot token can't read messages from Chatwoot.
+// Fallback history when the bot token can't read messages from Chatwoot
+// (Chatwoot returns 401 "not authorized for bots" on the messages list endpoint).
 type Turn = { role: "user" | "assistant"; text: string };
+let historyForbidden = false;
 const localHistory = new TtlMap<Turn[]>(6 * 60 * 60 * 1000);
 
 async function loadHistory(msg: IncomingMessage): Promise<Turn[]> {
   let remote: ChatwootMessage[] = [];
-  if (!env.dryRun) {
+  if (!env.dryRun && !historyForbidden) {
     try {
       remote = await chatwoot.getMessages(msg.accountId, msg.conversationId);
     } catch (err) {
-      console.warn("history from Chatwoot failed, using memory:", (err as Error).message);
+      if (err instanceof ChatwootError && err.status === 401) historyForbidden = true;
+      console.warn("history from Chatwoot failed, using memory from now on:", (err as Error).message);
     }
   }
   let turns: Turn[];
@@ -83,7 +86,8 @@ export async function handleIncoming(msg: IncomingMessage): Promise<void> {
     if (ctx.handedOff) return;
     if (!reply) throw new Error("empty reply from model");
 
-    await chatwoot.sendMessage(a, c, reply);
+    const sent = await chatwoot.sendMessage(a, c, reply);
+    console.log(`[reply] conv=${c} message_id=${sent?.id} "${reply.slice(0, 80)}"`);
     localHistory.set(c, [...turns, { role: "assistant", text: reply }]);
     if (ctx.resolveAfterReply) await chatwoot.toggleStatus(a, c, "resolved");
   } catch (err) {

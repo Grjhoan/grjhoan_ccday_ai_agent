@@ -24,7 +24,14 @@ app.post("/chatwoot/webhook", (req, res) => {
 
   const msg = shouldHandle(req.body);
   if ("ignore" in msg) {
-    console.log(`[webhook] ignored (${msg.ignore})`);
+    const b = req.body ?? {};
+    const detail =
+      msg.ignore === "invalid_payload"
+        ? ` event=${b.event} keys=${Object.keys(b).join(",")}`
+        : b.event === "message_created"
+          ? ` conv=${b.conversation?.id} sender=${b.sender?.type ?? "?"}:${b.sender?.name ?? "?"} "${String(b.content ?? "").slice(0, 80)}"`
+          : "";
+    console.log(`[webhook] ignored (${msg.ignore})${detail}`);
     return;
   }
   if (seen.has(msg.messageId)) {
