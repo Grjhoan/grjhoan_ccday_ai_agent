@@ -3,7 +3,7 @@ import { z } from "zod";
 export const WebhookPayload = z
   .object({
     event: z.string(),
-    id: z.number().optional(),
+    id: z.unknown(),
     content: z.string().nullish(),
     message_type: z.union([z.string(), z.number()]).optional(),
     private: z.boolean().optional(),
@@ -38,7 +38,7 @@ export function shouldHandle(raw: unknown): IncomingMessage | { ignore: string }
   if (p.event !== "message_created") return { ignore: `event:${p.event}` };
   if (p.message_type !== "incoming" && p.message_type !== 0) return { ignore: `message_type:${p.message_type}` };
   if (p.private) return { ignore: "private" };
-  if (!p.conversation || !p.account || p.id === undefined) return { ignore: "missing_ids" };
+  if (!p.conversation || !p.account || typeof p.id !== "number") return { ignore: "missing_ids" };
   if (p.conversation.status !== "pending") return { ignore: `status:${p.conversation.status}` };
   const content = (p.content ?? "").trim();
   if (!content) return { ignore: "empty_content" };

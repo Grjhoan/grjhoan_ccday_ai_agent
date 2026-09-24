@@ -1,0 +1,12 @@
+{
+  "event": "message_created",
+  "id": 5303,
+  "content": "Hola?",
+  "message_type": "incoming",
+  "private": false,
+  "created_at": "2026-09-23T20:00:00.000Z",
+  "sender": { "id": 77, "name": "Laura Gómez", "email": "laura.gomez@academiatigres.co", "type": "contact" },
+  "conversation": { "id": 104, "status": "open", "labels": [], "inbox_id": 1 },
+  "account": { "id": 1, "name": "Silbato" },
+  "inbox": { "id": 1, "name": "Website" }
+}

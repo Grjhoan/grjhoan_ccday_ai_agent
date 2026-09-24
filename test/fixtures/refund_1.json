@@ -1,0 +1,12 @@
+{
+  "event": "message_created",
+  "id": 5101,
+  "content": "Hola, quiero cancelar y pedir el reembolso de mi plan básico de este mes, ya no lo vamos a usar",
+  "message_type": "incoming",
+  "private": false,
+  "created_at": "2026-09-23T20:00:00.000Z",
+  "sender": { "id": 77, "name": "Laura Gómez", "email": "laura.gomez@academiatigres.co", "type": "contact" },
+  "conversation": { "id": 102, "status": "pending", "labels": [], "inbox_id": 1 },
+  "account": { "id": 1, "name": "Silbato" },
+  "inbox": { "id": 1, "name": "Website" }
+}
