@@ -1,0 +1,28 @@
+{
+  "name": "silbato-support-agent",
+  "version": "1.0.0",
+  "description": "Silbato AI support agent (Chatwoot Agent Bot)",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "test": "vitest run"
+  },
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
+    "express": "^5.2.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  }
+}
