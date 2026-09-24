@@ -2,7 +2,7 @@
 
 Chatwoot **Agent Bot** for Silbato's website widget. Answers basic business info, handles refund requests end to end with deterministic rules, and hands off to a human agent.
 
-- Model: `claude-opus-5-5` with `effort: high`, tool use, prompt caching on the system prompt.
+- Model: `claude-sonnet-5` with `effort: medium`, tool use, prompt caching on the system prompt.
 - Stateless: conversation context is rebuilt from the Chatwoot messages API (in-memory fallback).
 - Business data is **fictional** (`knowledge/`, `config/`, `data/`).
 
@@ -30,8 +30,8 @@ Chatwoot ──POST /chatwoot/webhook?secret=…──▶ server.ts (200 immedia
 | Var | Notes |
 |---|---|
 | `ANTHROPIC_API_KEY` | required |
-| `ANTHROPIC_MODEL` | default `claude-opus-5-5` |
-| `ANTHROPIC_EFFORT` | default `high` |
+| `ANTHROPIC_MODEL` | default `claude-sonnet-5` |
+| `ANTHROPIC_EFFORT` | default `medium` |
 | `CHATWOOT_URL` | e.g. `https://your-chatwoot.example.com` |
 | `CHATWOOT_BOT_TOKEN` | access token of the Agent Bot |
 | `CHATWOOT_USER_TOKEN` | optional; used for labels if the bot token gets 401/403 |

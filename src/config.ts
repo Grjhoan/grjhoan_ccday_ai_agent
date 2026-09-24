@@ -8,8 +8,8 @@ export const readJson = <T>(...p: string[]): T => JSON.parse(readText(...p));
 
 export const env = {
   port: Number(process.env.PORT ?? 3000),
-  model: process.env.ANTHROPIC_MODEL ?? "claude-opus-5-5",
-  effort: (process.env.ANTHROPIC_EFFORT ?? "high") as "low" | "medium" | "high" | "xhigh" | "max",
+  model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-5",
+  effort: (process.env.ANTHROPIC_EFFORT ?? "medium") as "low" | "medium" | "high" | "xhigh" | "max",
   chatwootUrl: (process.env.CHATWOOT_URL ?? "").replace(/\/+$/, ""),
   botToken: process.env.CHATWOOT_BOT_TOKEN ?? "",
   userToken: process.env.CHATWOOT_USER_TOKEN || undefined,
