@@ -32,7 +32,7 @@ Chatwoot ──POST /chatwoot/webhook?secret=…──▶ server.ts (200 immedia
 | `ANTHROPIC_API_KEY` | required |
 | `ANTHROPIC_MODEL` | default `claude-opus-5-5` |
 | `ANTHROPIC_EFFORT` | default `high` |
-| `CHATWOOT_URL` | e.g. `https://chatwoot-rails-production-0b69.up.railway.app` |
+| `CHATWOOT_URL` | e.g. `https://your-chatwoot.example.com` |
 | `CHATWOOT_BOT_TOKEN` | access token of the Agent Bot |
 | `CHATWOOT_USER_TOKEN` | optional; used for labels if the bot token gets 401/403 |
 | `WEBHOOK_SECRET` | shared secret in the webhook URL |
